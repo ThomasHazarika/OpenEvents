@@ -1,0 +1,25 @@
+<%- layout("/layouts/boilerplate") %>
+
+<div
+  class="min-h-screen flex justify-items-center items-center ml-10 mr-10 sm:grid sm:place-items-center"
+>
+  <div class="bg-gray-600 rounded-2xl" role="alert">
+    <h5 class="p-15 font-bold"><%= message %></h5>
+    <div class="flex justify-around">
+      <button
+        id="back-btn"
+        class="bg-primary border-primary border-none rounded-full inline-flex items-center justify-center py-3 px-7 text-center text-base text-black hover:bg-[#1B44C8] hover:border-[#1B44C8] bg-white disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8] duration-500 font-bold mb-3"
+      >
+        <i class="fa-solid fa-arrow-left mr-2"></i>
+        Go back
+      </button>
+      <button
+        id="home-btn"
+        class="bg-primary border-primary border-none rounded-full inline-flex items-center justify-center py-3 px-7 text-center text-base text-black hover:bg-[#1B44C8] hover:border-[#1B44C8] bg-white disabled:border-gray-3 disabled:text-dark-5 active:bg-[#1B44C8] active:border-[#1B44C8] duration-500 font-bold mb-3"
+      >
+        <i class="fa-solid fa-house-user mr-2"></i>
+        Take me home
+      </button>
+    </div>
+  </div>
+</div>
