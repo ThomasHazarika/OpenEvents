@@ -6,5 +6,5 @@ backBtn.addEventListener("click", () => {
 });
 
 homeBtn.addEventListener("click", () => {
-  window.location.href = "/events";
+  window.location.href = "/";
 });

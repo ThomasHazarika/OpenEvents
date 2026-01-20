@@ -76,15 +76,13 @@ const scrapeUnstopEvents = async (req, res) => {
 
     console.log(`Scraped ${uniqueEvents.length} events from Unstop`);
 
-    res.redirect("/events");
+    res.redirect("/");
   } catch (error) {
     console.error("Scraping error:", error);
     res.status(500).render("events/error", {
       message: "Failed to scrape events",
     });
   }
-
-  
 };
 
 export { scrapeUnstopEvents };
