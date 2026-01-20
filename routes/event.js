@@ -5,7 +5,7 @@ import { exportEventsToExcel } from "../controllers/excelController.js";
 
 const router = express.Router();
 
-router.get("/events", getDashboard);
+router.get("/", getDashboard);
 
 router.post("/scrape", scrapeUnstopEvents);
 
