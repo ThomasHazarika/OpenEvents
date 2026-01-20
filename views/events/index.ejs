@@ -47,16 +47,16 @@
 
 
     <div class="bg-green-500 text-white rounded-xl p-6 shadow">
-      <p class="text-sm uppercase opacity-80">Export</p>
+      <p class="text-sm uppercase opacity-80 font-semibold">Export</p>
       <% if (count > 0) { %>
         <a
           href="/export"
-          class="mt-4 text-emerald-600 text-center py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          class="mt-5 pt-3 text-emerald-600 text-center rounded-lg font-semibold transition-transform duration-300 ease-out hover:scale-105 hover:text-white"
           >
             Download Excel File
         </a>
       <% } else { %>
-        <p class="mt-4 text-sm opacity-70">
+        <p class="text-xl font-semibold opacity-70">
           No data to export
         </p>
       <% } %>

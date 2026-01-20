@@ -35,6 +35,8 @@ const exportEventsToExcel = async (req, res) => {
 
   await workbook.xlsx.write(res);
   res.end();
+
+  
 };
 
 export { exportEventsToExcel };

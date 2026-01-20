@@ -7,7 +7,6 @@ const getDashboard = async (req, res) => {
     // Clear previous Unstop data on refresh
     await Event.deleteMany({ platform: "Unstop" });
 
-    // Always render empty dashboard
     res.render("events/index", {
       events,
       count: events.length,

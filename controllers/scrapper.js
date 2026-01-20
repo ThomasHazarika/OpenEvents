@@ -6,19 +6,25 @@ const scrapeUnstopEvents = async (req, res) => {
     const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
 
+    page.setDefaultTimeout(60000);
+    page.setDefaultNavigationTimeout(60000);
+
     await page.goto("https://unstop.com/events", {
       waitUntil: "networkidle",
     });
 
-    // Scroll to load lazy content
+    await page.waitForTimeout(3000);
+
+    // Scroll to trigger lazy loading
     for (let i = 0; i < 5; i++) {
-      await page.mouse.wheel(0, 3000);
-      await page.waitForTimeout(2000);
+      await page.mouse.wheel(0, 4000);
+      await page.waitForTimeout(1500);
     }
 
-    const events = await page.evaluate(() => {
-      const results = [];
+    // Extract events
+    const rawEvents = await page.evaluate(() => {
       const cards = document.querySelectorAll("a[href^='/events/']");
+      const results = [];
 
       cards.forEach((card) => {
         const text = card.innerText;
@@ -30,7 +36,7 @@ const scrapeUnstopEvents = async (req, res) => {
           text.split("\n")[0];
 
         results.push({
-          title: title?.trim() || "N/A",
+          title: title?.trim(),
           location: text.includes("India") ? "India" : "Remote",
           deadline: text.match(/Ends.*?\d+/)?.[0] || "N/A",
           link: card.href,
@@ -42,15 +48,31 @@ const scrapeUnstopEvents = async (req, res) => {
 
     await browser.close();
 
-    // Deduplicate
+    const cleaned = rawEvents
+      .filter((e) => e?.title && e?.link)
+      .map((e) => ({
+        title: e.title,
+        location: e.location || "N/A",
+        deadline: e.deadline || "N/A",
+        link: e.link,
+      }));
+
+    // Deduplicate by link
     const uniqueEvents = Array.from(
-      new Map(events.map((e) => [e.link, e])).values(),
+      new Map(cleaned.map((e) => [e.link, e])).values(),
     );
 
+    // Replace previous Unstop data
     await Event.deleteMany({ platform: "Unstop" });
-    await Event.insertMany(
-      uniqueEvents.map((e) => ({ ...e, platform: "Unstop" })),
-    );
+
+    if (uniqueEvents.length) {
+      await Event.insertMany(
+        uniqueEvents.map((e) => ({
+          ...e,
+          platform: "Unstop",
+        })),
+      );
+    }
 
     console.log(`Scraped ${uniqueEvents.length} events from Unstop`);
 
@@ -61,6 +83,8 @@ const scrapeUnstopEvents = async (req, res) => {
       message: "Failed to scrape events",
     });
   }
+
+  
 };
 
 export { scrapeUnstopEvents };
