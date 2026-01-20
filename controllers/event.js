@@ -21,24 +21,3 @@ const getDashboard = async (req, res) => {
 };
 
 export { getDashboard };
-
-/*
-  
-  import Event from "../models/event.js";
-  
-  const getDashboard = async (req, res) => {
-    const events = await Event.find().sort({ createdAt: -1 });
-  
-    await Event.deleteMany({ platform: "Unstop" });
-  
-    events = [];
-    res.render("events/index", { events, count: 0 });
-  
-    res.render("events/index", {
-      events,
-      count: events.length,
-    });
-  };
-  
-  export { getDashboard };
-  */

@@ -44,12 +44,12 @@ const scrapeUnstopEvents = async (req, res) => {
 
     // Deduplicate
     const uniqueEvents = Array.from(
-      new Map(events.map((e) => [e.link, e])).values()
+      new Map(events.map((e) => [e.link, e])).values(),
     );
 
     await Event.deleteMany({ platform: "Unstop" });
     await Event.insertMany(
-      uniqueEvents.map((e) => ({ ...e, platform: "Unstop" }))
+      uniqueEvents.map((e) => ({ ...e, platform: "Unstop" })),
     );
 
     console.log(`Scraped ${uniqueEvents.length} events from Unstop`);

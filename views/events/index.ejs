@@ -45,10 +45,30 @@
       <p class="text-xl font-semibold">Unstop</p>
     </div>
 
+
     <div class="bg-green-500 text-white rounded-xl p-6 shadow">
-      <p class="text-sm uppercase opacity-80">Status</p>
-      <p class="text-xl font-semibold">Live</p>
+      <p class="text-sm uppercase opacity-80">Export</p>
+      <% if (count > 0) { %>
+        <a
+          href="/export"
+          class="mt-4 text-emerald-600 text-center py-2 rounded-lg font-semibold hover:bg-gray-100 transition"
+          >
+            Download Excel File
+        </a>
+      <% } else { %>
+        <p class="mt-4 text-sm opacity-70">
+          No data to export
+        </p>
+      <% } %>
     </div>
+
+
+
+
+
+
+
+
   </div>
 
   <!-- Table -->
@@ -88,9 +108,9 @@
             >
               View
             </a>
-            
           
             <% } else { %> — <% } %>
+
           </td>
         </tr>
         <% }) %>
