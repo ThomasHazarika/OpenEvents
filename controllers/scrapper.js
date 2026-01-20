@@ -3,7 +3,10 @@ import Event from "../models/event.js";
 
 const scrapeUnstopEvents = async (req, res) => {
   try {
-    const browser = await chromium.launch({ headless: true });
+    const browser = await chromium.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     page.setDefaultTimeout(60000);
